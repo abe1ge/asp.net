@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "ShowForm";
+}
+
+<h2>Student details</h2>
+
+<form action="ProccessForm" class="form-horizontal">
+    <!-- Text input-->
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="Name">Name</label>
+        <div class="col-md-4">
+            <input id="Name" name="Name" type="text"  class="form-control input-md">
+            <span class="help-block">Your name</span>
+        </div>
+    </div>
+
+    <!-- Text input-->
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="RegNo">Text Input</label>
+        <div class="col-md-4">
+            <input id="RegNo" name="RegNo" type="text" placeholder="Regestration Number" class="form-control input-md">
+            <span class="help-block">Your Regestration number</span>
+        </div>
+    </div>
+
+    <!-- Text input-->
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="Marks">Marks</label>
+        <div class="col-md-4">
+            <input id="Marks" name="Marks" type="text" class="form-control input-md" />
+            <span class="help-block">Your mark</span>
+        </div>
+    </div>
+
+    <!-- Text input-->
+    <div class="form-group">
+        <div class="col-md-3">
+            <button id="Submit" name="Submit" class="btn btn-primary " type="submit">Submit</button>
+        </div>
+    </div>
+
+</form> 

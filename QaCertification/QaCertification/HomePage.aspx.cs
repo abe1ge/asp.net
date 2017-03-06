@@ -11,28 +11,68 @@ namespace QaCertification
     public partial class WebForm1 : System.Web.UI.Page
     {
         SqlConnection con;
-        SqlCommand cmd;
-        SqlDataReader read;
+        SqlCommand cmd = new SqlCommand();
+        SqlDataReader r;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename='C:\\Users\\Administrator\\Documents\\abel\\projects\\asp.net\\QaCertification\\QaCertification\\App_Data\\Database1.mdf';Integrated Security=True");
-            try
+            if (Session["role"] == null)
             {
-                con.Open();
-                page_Load_Data();
-            }
-            catch (Exception ee)
-            {
-                Response.Write("Having some techincial issues, please try again later");
+                Response.Redirect("LogIn.aspx");
             }
 
-            Response.Write("");
+            connectToDatabase();
+
         }
 
-        private void page_Load_Data()
+        private void connectToDatabase()
+        {
+            //create a new sqlConnection objecting with the connection string as argument
+            con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Administrator\\Documents\\abel\\projects\\asp.net\\QaCertification\\QaCertification\\App_Data\\Database1.mdf;Integrated Security=True");
+            try
+            {
+                //try to open the connection
+                con.Open();
+            }
+            catch (Exception)
+            {
+                //if it can't connect do this
+                Response.Write("Having technical deficulities");
+            }
+
+            //create new sqlCommand object
+            cmd = new SqlCommand();
+            //tell the sql command to use the connection we just created
+            cmd.Connection = con;
+        }
+
+        protected void page_Load_Data()
         {
 
+            cmd.CommandText = "select * from QA_Personal";
+
+            using (r = cmd.ExecuteReader())
+            {
+
+                while (r.Read())
+                {
+                    Response.Write(" <tr><td>" + r["Name"].ToString() + "</td>");
+                    Response.Write(" <td>" + r["Address"].ToString() + "</td>");
+
+
+                    if (Session["role"] != null && Session["role"].ToString() == "1")
+                    {
+                        Response.Write(" <td> <a href='Edit.aspx?ID=" + r["QAID"].ToString() + "'> Edit </a></td>");
+                        Response.Write(" <td> <a href='Delete.aspx?ID=" + r["QAID"].ToString() + "'> Delete </a></td></tr>");
+                    }
+                    else if (Session["role"] != null && Session["role"].ToString() == "2")
+                    {
+                        Response.Write(" <td>" + r["QAID"].ToString() + "Edit</td>");
+                        Response.Write(" <td>" + r["QAID"].ToString() + "</td></tr>");
+                    }
+
+                }
+            }
         }
     }
 }

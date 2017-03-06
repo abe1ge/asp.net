@@ -15,12 +15,7 @@
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
-                <tr>
-                    <td>Alfreds Futterkiste</td>
-                    <td>Maria Anders</td>
-                    <td>Germany</td>
-                </tr>
-
+                <% page_Load_Data(); %>
             </table>
             <%--</div>--%>
         </div>
